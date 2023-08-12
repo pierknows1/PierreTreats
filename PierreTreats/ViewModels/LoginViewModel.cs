@@ -5,7 +5,7 @@ namespace PierreTreats.ViewModels
     public class LoginViewModel
     {
         [Required]
-        [Display(nameof = "Email or Username")]
+        [Display(Name = "Email or Username")]
         public string Email { get; set; }
 
         [Required]
