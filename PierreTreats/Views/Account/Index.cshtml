@@ -2,7 +2,10 @@
   Layout = "_Layout";
 }
 
-<h2>Account Input</h2>
+@model PierreTreats.Models.ApplicationUser
+
+<h2>Account Details</h2>
+
 <hr />
 @if (User.Identity.IsAuthenticated)
 {
