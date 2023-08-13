@@ -4,14 +4,14 @@
 
 @using PierreTreats.Models
 
-<h1>Flavors:</h1> 
+<h1>Treats:</h1> 
 
-<h2>No Flavors have been added.</h2>
+<h2>No Treats have been added.</h2>
 
-@foreach (Flavor flavor in Model)
+@foreach (Treat treat in Model)
 {
-    @Html.ActionLink($"{flavor.FlavorName}", "Details", new { id = flavor.FlavorId })
+    @Html.ActionLink($"{treat.TreatName}", "Details", new { id = treat.TreatId })
 }
 
-<p>@Html.ActionLink("Add a new flavor", "Create", "Flavors")</p>
+<p>@Html.ActionLink("Add a new treat", "Create", "Treats")</p>
 <p>@Html.ActionLink("Home", "Index")</p>

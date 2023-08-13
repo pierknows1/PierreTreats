@@ -2,17 +2,17 @@
     Layout = "_Layout";
 }
 
-@model PierreTreats.Models.Flavor
+@model PierreTreats.Models.Treat
 
-<h1>Add a flavor:</h1>
+<h1>Add a treat:</h1>
 
 @using (Html.BeginForm())
 {
 
-    <h3>@Html.LabelFor(model => model.FlavorName)</h3>
-    <h3>@Html.TextBoxFor(model => model.FlavorName)</h3>
+    <h3>@Html.LabelFor(model => model.TreatName)</h3>
+    <h3>@Html.TextBoxFor(model => model.TreatName)</h3>
 
     <input type="submit" value="save" class="btn btn-dark" />
 }
 
-<p>@Html.ActionLink("Back to List", "Index", "Flavors")</p>
+<p>@Html.ActionLink("Back to List", "Index", "Treats")</p>
