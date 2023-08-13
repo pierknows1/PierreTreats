@@ -5,11 +5,12 @@ using PierreTreats.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
-
+using System.Threading.Tasks;
 
 namespace PierreTreats.Controllers
 
 {
+    [Authorize]
     public class FlavorsController : Controller
 
     {
@@ -23,6 +24,7 @@ namespace PierreTreats.Controllers
         _userManager = userManager;
         }
 
+    [AllowAnonymous]
     public ActionResult Index()
     {
         return View(_db.Flavors.ToList());
@@ -41,6 +43,7 @@ namespace PierreTreats.Controllers
         return RedirectToAction("Index");
         }
 
+    [AllowAnonymous]
     public ActionResult Details(int id)
     {
         ViewBag.Treats = _db.Treats.ToList();
@@ -84,12 +87,14 @@ namespace PierreTreats.Controllers
     {
         _db.Flavors.Update(flavor);
         _db.SaveChanges();
-        return RedirectToAction("Index");
+        return RedirectToAction("Details", new { id = flavor.FlavorId });
         }
 
         public ActionResult Delete(int id)
     {
         Flavor thisFlavor = _db.Flavors.FirstOrDefault(flavor => flavor.FlavorId == id);
+        _db.Flavors.Remove(thisFlavor);
+        _db.SaveChanges();
         return View(thisFlavor);
         }
 
