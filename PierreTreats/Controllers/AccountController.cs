@@ -7,7 +7,6 @@ using PierreTreats.ViewModels;
 using System.Linq;
 using System;
 
-
 namespace PierreTreats.Controllers
 {
     public class AccountController : Controller
@@ -95,3 +94,5 @@ namespace PierreTreats.Controllers
         }
     }
 }
+
+
