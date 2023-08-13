@@ -9,7 +9,7 @@ namespace PierreTreats.Controllers
 
 {
     public class FlavorsController : Controller
-    
+
     {
 
     private readonly TreatsContext _db;
@@ -48,6 +48,13 @@ namespace PierreTreats.Controllers
                 .FirstOrDefault(flavor => flavor.FlavorId == id);
         return View(thisFlavor); 
         }   
+    
+    public ActionResult AddTreat (int id)
+    {
+        Flavor thisFlavor = _db.Flavors.FirstOrDefault(flavor => flavor.FlavorId == id);
+        ViewBag.TreatId = new SelectList(_db.Treats, "TreatId, TreatName");
+        return View(thisFlavor);
+    }
 
     [HttpPost]
         public ActionResult AddTreat(Flavor flavor, int treatId)
