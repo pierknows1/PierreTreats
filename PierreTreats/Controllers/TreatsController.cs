@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Identity;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
+using System.Security.Claims;
+using System.Collections.Generic;
+using PierreTreats.ViewModels;
 
 namespace PierreTreats.Controllers
 
@@ -22,12 +25,15 @@ namespace PierreTreats.Controllers
     {
         _db = db;
         _userManager = userManager;
-        }
+    }
 
     [AllowAnonymous]
-    public ActionResult Index()
+    public async Task<ActionResult> Index()
     {
-        return View(_db.Treats.ToList());
+        string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+        List<Treat> model = _db.Treats.ToList();
+        return View(model);
         }
 
     public ActionResult Create()
@@ -35,18 +41,27 @@ namespace PierreTreats.Controllers
         return View();
         }
 
-    [HttpPost]
-    public ActionResult Create (Treat treat)
+   [HttpPost]
+    public async Task<ActionResult> Create (Treat treat, int FlavorId)
     {
-        _db.Treats.Add(treat);
-        _db.SaveChanges();
-        return RedirectToAction("Index");
+        if (!ModelState.IsValid)
+        {
+            return View(treat);
         }
+        else 
+        {
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+            treat.User = currentUser;
+            _db.Treats.Add(treat);
+            _db.SaveChanges();
+            return RedirectToAction ("Index");
+        }
+    }
 
     [AllowAnonymous]
     public ActionResult Details(int id)
     {
-        ViewBag.Flavors = _db.Flavors.ToList();
         Treat thisTreat = _db.Treats
                 .Include(treat => treat.JoinEntities)
                 .ThenInclude(join => join.Flavor)
@@ -54,13 +69,35 @@ namespace PierreTreats.Controllers
         return View(thisTreat); 
         }   
     
-    public ActionResult AddFlavor (int id)
+    public ActionResult Edit(int id)
     {
         Treat thisTreat = _db.Treats.FirstOrDefault(treat => treat.TreatId == id);
-        ViewBag.FlavorId = new SelectList(_db.Flavors, "FlavorId", "FlavorName");
         return View(thisTreat);
     }
-
+    
+    [HttpPost]
+    public ActionResult edit (Treat treat)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(treat);
+        }
+        else{
+            _db.Treats.Update(treat);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+    }
+    public ActionResult AddFlavor (int id)
+    {
+      Treat thisTreat = _db.Treats
+                        .Include(treat => treat.JoinEntities)
+                        .ThenInclude(join => join.Flavor)
+                        .FirstOrDefault(treats => treats.TreatId == id);
+    ViewBag.FlavorId = new SelectList(_db.Flavors, "FlavorId", "FlavorName");
+    return View(thisTreat);
+    }
+ 
     [HttpPost]
         public ActionResult AddFlavor(Treat treat, int flavorId)
         {
@@ -75,31 +112,13 @@ namespace PierreTreats.Controllers
         return RedirectToAction("Details", new { id = treat.TreatId });
         }
 
-    public ActionResult Edit(int id)
-    
-    {
-        Treat thisTreat = _db.Treats.FirstOrDefault(treat => treat.TreatId == id);
-        return View(thisTreat);
-        }
-
-    [HttpPost]
-        public ActionResult Edit(Treat treat)
-    {
-        _db.Treats.Update(treat);
-        _db.SaveChanges();
-        return RedirectToAction("Details", new { id = treat.TreatId });
-        }
-
         public ActionResult Delete(int id)
-    {
+        {
         Treat thisTreat = _db.Treats.FirstOrDefault(treat => treat.TreatId == id);
-        _db.Treats.Remove(thisTreat);
-        _db.SaveChanges();
         return View(thisTreat);
         }
 
     [HttpPost, ActionName("Delete")]
-
     public ActionResult DeleteConfirmed(int id)
     {
         Treat thisTreat = _db.Treats.FirstOrDefault(treat => treat.TreatId == id);

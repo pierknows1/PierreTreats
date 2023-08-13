@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Identity;
 using PierreTreats.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace PierreTreats.Controllers
 {
@@ -18,17 +20,14 @@ namespace PierreTreats.Controllers
         }
 
         [HttpGet("/")]
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            Dictionary<string, object[]> model = new Dictionary<string, object[]>();
-
-            List<Treat> treats = _db.Treats.ToList();
-            List<Flavor> flavors = _db.Flavors.ToList();
-
-            model.Add("treats", treats.ToArray());
-            model.Add("flavors", flavors.ToArray());
-
-            return View(model);
+           Flavor[] flavors = _db.Flavors.ToArray();
+           Treat[] treats = _db.Treats.ToArray();
+           Dictionary<string, object[]> model = new Dictionary<string, object[]>();
+           model.Add("flavors", flavors);
+           model.Add("treats", treats);
+           return View(model);
         }
     }
 }
