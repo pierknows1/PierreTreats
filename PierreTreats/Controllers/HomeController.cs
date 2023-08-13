@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Identity; 
+using Microsoft.AspNetCore.Identity;
 using PierreTreats.Models;
 using System.Collections.Generic;
-
+using System.Linq;
 
 namespace PierreTreats.Controllers
 {
@@ -20,7 +20,15 @@ namespace PierreTreats.Controllers
         [HttpGet("/")]
         public ActionResult Index()
         {
-            return View();
+            Dictionary<string, object[]> model = new Dictionary<string, object[]>();
+
+            List<Treat> treats = _db.Treats.ToList();
+            List<Flavor> flavors = _db.Flavors.ToList();
+
+            model.Add("treats", treats.ToArray());
+            model.Add("flavors", flavors.ToArray());
+
+            return View(model);
         }
     }
 }
