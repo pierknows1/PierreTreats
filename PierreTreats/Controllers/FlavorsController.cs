@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using PierreTreats.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace PierreTreats.Controllers
 

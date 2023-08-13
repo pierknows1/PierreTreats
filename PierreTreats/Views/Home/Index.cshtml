@@ -4,6 +4,26 @@
 
 @using PierreTreats.Models
 
-<div class="text-center">
-    <h1 class="display-4">HELLO</h1>
-</div>
+<h1>Welcome, please sign in</h1>
+
+<h2>Flavors: </h2>
+@if (Model["flavors"].Length == 0)
+{
+    <p>No flavors have been added.</p>
+    <p>@Html.ActionLink("add a flavor", "Create", "Flavors")</p>
+}
+    @foreach (Flavor flavor in Model["flavors"])
+    {
+        <li>@Html.ActionLink(@flavor.FlavorName, "Details", "Flavors")</li>
+    }
+
+<h2>Treats: </h2>
+@if (Model["treats"].Length == 0)
+{
+    <p>No treats have been added.</p>
+    <p>@Html.ActionLink("add a treat", "Create", "Treats")</p>
+}
+    @foreach (Treat treat in Model["treats"])
+    {
+        <li>@Html.ActionLink(@treat.TreatName, "Details", "Treats")</li>
+    }
