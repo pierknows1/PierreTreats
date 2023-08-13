@@ -18,7 +18,7 @@ namespace PierreTreats.ViewModels
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-         [Required]
+        [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm Password")]
         [Compare("Password", ErrorMessage = "Passwords don't match.")]
