@@ -2,14 +2,13 @@
   Layout = "_Layout";
 }
 
-@model PierreTreats.Models.ApplicationUser
 
 <h2>Account Details</h2>
 
 <hr />
 @if (User.Identity.IsAuthenticated)
 {
-  <p>Hello @User.Identity.Name!</p>
+  <p>Hello</p>
   @using (Html.BeginForm("LogOff", "Account"))
   {
     <input type="submit" class="btn btn-default" value="Log out" />

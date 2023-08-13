@@ -6,12 +6,15 @@
 
 <h1>Treats:</h1> 
 
-<h2>No Treats have been added.</h2>
+@if (@Model.Count == 0)
+{
+    <h2>No Treats have been added.</h2>
+}
 
 @foreach (Treat treat in Model)
 {
-    @Html.ActionLink($"{treat.TreatName}", "Details", new { id = treat.TreatId })
+   <li>@Html.ActionLink($"{treat.TreatName}", "Details", new { id = treat.TreatId })</li> 
 }
 
-<p>@Html.ActionLink("Add a new treat", "Create", "Treats")</p>
-<p>@Html.ActionLink("Home", "Index")</p>
+<p>@Html.ActionLink("Add a new treat", "Create")</p>
+<p>@Html.ActionLink("Home", "Index", "Home")</p>

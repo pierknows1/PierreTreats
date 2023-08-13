@@ -61,12 +61,17 @@ namespace PierreTreats.Controllers
     [AllowAnonymous]
     public ActionResult Details(int id)
     {
-        Flavor thisFlavor = _db.Flavors
-                .Include(flavor => flavor.JoinEntities)
-                .ThenInclude(join => join.Treat)
-                .FirstOrDefault(thisFlavor => thisFlavor.FlavorId == id);
-        return View(thisFlavor); 
-        }   
+        Flavor thisFlavor = _db.Flavors.FirstOrDefault(flavor => flavor.FlavorId == id);
+
+        if (thisFlavor == null)
+    {
+        return NotFound(); 
+    }
+
+    return View(thisFlavor);
+    
+    }   
+
     public ActionResult Edit (int id)
     {
         Flavor thisFlavor = _db.Flavors.
@@ -120,19 +125,24 @@ namespace PierreTreats.Controllers
         return View(thisFlavor);
         }
 
-    [HttpPost, ActionName("Delete")]
-
-    public ActionResult DeleteConfirmed(int id)
-    {
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteConfirmed(int id)
+        {
         Flavor thisFlavor = _db.Flavors.FirstOrDefault(flavor => flavor.FlavorId == id);
+
+        if (thisFlavor == null)
+        {
+            return NotFound(); 
+        }
+
         _db.Flavors.Remove(thisFlavor);
         _db.SaveChanges();
         return RedirectToAction("Index");
-        }
+}
 
-    [HttpPost]
-    public ActionResult DeleteJoin(int joinId)
-    {
+        [HttpPost]
+        public ActionResult DeleteJoin(int joinId)
+        {
         TreatFlavor joinEntry = _db.TreatFlavors.FirstOrDefault(entry => entry.TreatFlavorId == joinId);
         _db.TreatFlavors.Remove(joinEntry);
         _db.SaveChanges();

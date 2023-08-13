@@ -4,18 +4,16 @@
 
 @model PierreTreats.Models.Flavor
 
-<h1>Add a flavor:</h1>
+<h1>Add a Treat to this Flavor: @Html.DisplayFor(model => model.FlavorName)</h1>
 
 @using (Html.BeginForm())
 {
-    <div class="form-group">
-        @Html.LabelFor(model => model.FlavorName)
-        @Html.TextBoxFor(model => model.FlavorName, new { @class = "form-control" })
-        @Html.ValidationMessageFor(model => model.FlavorName, "", new { @class = "text-danger" })
-    </div>
+    @Html.HiddenFor(model => model.FlavorId)
 
-    //<input type="submit" value="Save" class="btn btn-dark" />
+        @Html.Label("Select Treat")
+        @Html.DropDownList("TreatId")
+
     <input type="submit" value="Save" />
 }
-
-<p>@Html.ActionLink("Back to List", "Index", "Flavors")</p>
+<br>
+    <p>@Html.ActionLink("Back to Treat Details", "Details", "Index")</p>

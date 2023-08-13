@@ -4,15 +4,27 @@
 
 @model PierreTreats.Models.Treat
 
-<h1>Edit</h1>
-<h2>Edit This Treat @Html.DisplayFor(model => model.TreatName)</h2>
+<h1>Treat Details</h1>
+<hr />
+<div>
+<h2>Edit This Treat @Html.DisplayNameFor(model => model.TreatName): @Html.DisplayFor(model => model.TreatName) </h2>
+</div>
 
-@using (Html.BeginForm())
+@if (Model.JoinEntities.Count == 0)
 {
-    @Html.HiddenFor(model => model.TreatName)
-    @Html.EditorFor(model => model.TreatName)
-
-    <input type="submit" value="save">
+    <p>This Treat doesn't have any flavors!</p>
+}
+    else {
+        <h3>This Treat has the following Flavors:</h3>
+        <ul>
+                @foreach (var join in Model.JoinEntities)
+                {
+                     <li>Flavor: @join.Flavor.FlavorName</li>
+                }               
+        </ul>
 }
 
-<p>@Html.ActionLink("Back to list", "Index", "Treats")</p>
+<p>@Html.ActionLink("Back to list", "Index")</p>
+<p>@Html.ActionLink("Edit Treat", "Edit", new { id = Model.TreatId})</p>
+<p>@Html.ActionLink("Add Treat", "AddTreat", new { id = Model.TreatId})</p>
+<p>@Html.ActionLink("Delete Treat", "Delete", new { id = Model.TreatId})</p>
