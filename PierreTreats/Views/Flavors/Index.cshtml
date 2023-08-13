@@ -1,0 +1,17 @@
+@{
+    Layout = "_Layout";
+}
+
+@using PierreTreats.Models
+
+<h1>Flavors:</h1> 
+
+<h2>No Flavors have been added.</h2>
+
+@foreach (Flavor flavor in Model)
+{
+    @Html.ActionLink($"{flavor.FlavorName}", "Details", new { id = flavor.FlavorId })
+}
+
+<p>@Html.ActionLink("Add a new flavor", "Create", "Flavors")</p>
+<p>@Html.ActionLink("Home", "Index")</p>
