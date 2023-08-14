@@ -2,19 +2,29 @@
     Layout = "_Layout";
 }
 
+
 @model PierreTreats.Models.Flavor
+
 
 <h2>Edit:</h2>
 
 <h3>Edit this Flavor: @Html.DisplayFor(model => model.FlavorName)</h3>
 
+<div class="container">
 @using (Html.BeginForm())
     {
-        @Html.HiddenFor(model => model.FlavorId)
-        @Html.LabelFor(model => model.FlavorName)
-        @Html.EditorFor(model => model.FlavorName)
+        <div class="form-container">
+            @Html.HiddenFor(model => model.FlavorId)
+            <div class="form-group">
+                <label class="form-label">@Html.DisplayNameFor(model => model.FlavorName)</label>
+                @Html.EditorFor(model => model.FlavorName, new { @class = "form-control"})
+            <p class="text-danger">@Html.ValidationMessageFor(model => model.FlavorName)</p>
+        </div>
+    </div>
         
-        <input type="submit" value="Save" />
+        <button type="submit" class="btn btn-sucess">Save </button>
+
     }
 
-    <p>@Html.ActionLink("Back to list", "Index")</p>
+    <p>@Html.ActionLink("Delete Flavor", "New", new{ id = Model.FlavorId}, new { @class = "btn btn-danger"})</p>
+    <p>@Html.ActionLink("Back to All Flavors", "Index", null, new { @class = "btn btn-secondary" })</p>

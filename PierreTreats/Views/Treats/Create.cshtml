@@ -2,20 +2,22 @@
     Layout = "_Layout";
 }
 
+@using PierreTreats.Models
 @model PierreTreats.Models.Treat
 
 <h1>Add a treat:</h1>
 
-<p>@Html.ValidationMessageFor(model => model.TreatId, "", new { @class = "text-danger", @style = "font-weight: 600;"})</p>
-<p>@Html.ValidationMessageFor(model => model.TreatName, "", new { @class = "text-danger", @style = "font-weight: 600;"})</p>
+            
+<div class="container">
+    @using (Html.BeginForm())
+        {
+            <label class="form-label">@Html.DisplayNameFor(model => model.TreatName)</label>
+            @Html.TextBoxFor(model => model.TreatName, new { @class = "form-control"})
+            <p class= "text-danger"> @Html.ValidationMessageFor(model => model.TreatName)</p>
 
-@using (Html.BeginForm())
-{
+    <button type="submit" class="btn btn-primary">Add a new Treat</button>
 
-    <h3>@Html.LabelFor(model => model.TreatName)</h3>
-    <h4>@Html.TextBoxFor(model => model.TreatName)</h4>
-
-    <input type="submit" value="save"/>
 }
+</div>
 
-<p>@Html.ActionLink("Back to List", "Index", "Treats")</p>
+<p>@Html.ActionLink("Back to Treats", "Index", null, new { @class = "btn btn-secondary"})</p>

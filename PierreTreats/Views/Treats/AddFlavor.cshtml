@@ -4,16 +4,28 @@
 
 @model PierreTreats.Models.Treat
 
-<h1>Add a Flavor to this Treat: @Html.DisplayFor(model => model.TreatName)</h1>
+<div class="container">
+    <h1 class="text-center">Add A flavor to treat</h1>
+</div>
+<hr />
+<div class="container">
+    <h2>Add @Html.DisplayFor(model => model.TreatName) to a Flavor:</h2>
+</div>
 
 @using (Html.BeginForm())
 {
-    @Html.HiddenFor(model => model.TreatId)
-
-        @Html.Label("Select Flavor")
-        @Html.DropDownList("FlavorId")
-
-    <input type="submit" value="Save" />
+    <div class="form-container">
+        @Html.HiddenFor(model => model.TreatId)
+        <div class="mb-3">
+            @Html.Label("Select Flavor:")
+            @Html.DropDownList("FlavorId", ViewBag.FlavorId as SelectList, new { @class = "form-select" })
+        </div>
+    </div>
+    <div class="text-center">
+        <input type="submit" value="Save" class="btn btn-primary" />
+    </div>
 }
-<br>
-    <p>@Html.ActionLink("Back to Flavor Details", "Details", "Index")</p>
+<hr />
+<div class="link-container">
+    <p>@Html.ActionLink("Back to All Treats", "Index", new { @class = "btn btn-secondary" })</p>
+</div>

@@ -2,20 +2,22 @@
     Layout = "_Layout";
 }
 
+@using PierreTreats.Models
 @model PierreTreats.Models.Flavor
 
 <h1>Add a flavor:</h1>
 
-<p>@Html.ValidationMessageFor(model => model.FlavorId, "", new { @class = "text-danger", @style = "font-weight: 600;"})</p>
-<p>@Html.ValidationMessageFor(model => model.FlavorName, "", new { @class = "text-danger", @style = "font-weight: 600;"})</p>
+            
+<div class="container">
+    @using (Html.BeginForm())
+        {
+            <label class="form-label">@Html.DisplayNameFor(model => model.FlavorName)</label>
+            @Html.TextBoxFor(model => model.FlavorName, new { @class = "form-control"})
+            <p class= "text-danger"> @Html.ValidationMessageFor(model => model.FlavorName)</p>
 
-@using (Html.BeginForm())
-{
+    <button type="submit" class="btn btn-primary">Add a new Flavor</button>
 
-    <h3>@Html.LabelFor(model => model.FlavorName)</h3>
-    <h4>@Html.TextBoxFor(model => model.FlavorName)</h4>
-
-    <input type="submit" value="save"/>
 }
+</div>
 
-<p>@Html.ActionLink("Back to List", "Index", "Flavors")</p>
+<p>@Html.ActionLink("Back to Flavors", "Index", null, new { @class = "btn btn-secondary"})</p>

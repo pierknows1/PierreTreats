@@ -10,11 +10,11 @@
 {
     <h2>No Treats have been added.</h2>
 }
-
+<ul>
 @foreach (Treat treat in Model)
 {
    <li>@Html.ActionLink($"{treat.TreatName}", "Details", new { id = treat.TreatId })</li> 
 }
-
-<p>@Html.ActionLink("Add a new treat", "Create")</p>
-<p>@Html.ActionLink("Home", "Index", "Home")</p>
+</ul>
+<p>@Html.ActionLink("Add a new treat", "Create", "treats")</p>
+<p>@Html.ActionLink("Return home", "Index", "Home", null, new { @class = "btn btn-secondary"})</p>

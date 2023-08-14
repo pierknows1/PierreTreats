@@ -2,6 +2,7 @@
     Layout = "_Layout";
 }
 
+@using PierreTreats.Models
 @model PierreTreats.Models.Flavor
 
 <h1>Flavor Details</h1>
@@ -17,14 +18,15 @@
     else {
         <h3>This Flavor has the following Treats:</h3>
         <ul>
-                @foreach (var join in Model.JoinEntities)
+                @foreach (TreatFlavor join in Model.JoinEntities)
                 {
                      <li>Treat: @join.Treat.TreatName</li>
                 }               
         </ul>
 }
 
-<p>@Html.ActionLink("Back to list", "Index")</p>
 <p>@Html.ActionLink("Edit Flavor", "Edit", new { id = Model.FlavorId})</p>
-<p>@Html.ActionLink("Add Flavor", "AddFlavor", new { id = Model.FlavorId})</p>
+<p>@Html.ActionLink("Add Treat to flavor", "AddTreat", new { id = Model.FlavorId})</p>
 <p>@Html.ActionLink("Delete Flavor", "Delete", new { id = Model.FlavorId})</p>
+<p>@Html.ActionLink("Back to all flavors", "Index")</p>
+<p>@Html.ActionLink("Return Home", "Index", "Home", null, new { @class = "btn btn-secondary"})</p>
